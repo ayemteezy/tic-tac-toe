@@ -1,0 +1,354 @@
+/*! modern-normalize v3.0.1 | MIT License | https://github.com/sindresorhus/modern-normalize */
+
+/*
+Document
+========
+*/
+
+/**
+Use a better box model (opinionated). Box sizing should not be inherited. (https://www.oddbird.net/2025/09/04/box-model/)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+/**
+1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+2. Correct the line height in all browsers.
+3. Prevent adjustments of font size after orientation changes in iOS.
+4. Use a more readable tab size (opinionated).
+*/
+
+html {
+  font-family:
+    system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji"; /* 1 */
+  line-height: 1.15; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 3 */
+  tab-size: 4; /* 4 */
+}
+
+/*
+Sections
+========
+*/
+
+/**
+Remove the margin in all browsers.
+*/
+
+body {
+  margin: 0;
+}
+
+/*
+Text-level semantics
+====================
+*/
+
+/**
+Add the correct font weight in Chrome and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+1. Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
+2. Correct the odd 'em' font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family:
+    ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/**
+Prevent 'sub' and 'sup' elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+Tabular data
+============
+*/
+
+/**
+Correct table border color inheritance in Chrome and Safari. (https://issues.chromium.org/issues/40615503, https://bugs.webkit.org/show_bug.cgi?id=195016)
+*/
+
+table {
+  border-color: currentcolor;
+}
+
+/*
+Forms
+=====
+*/
+
+/**
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+Correct the inability to style clickable types in iOS and Safari.
+*/
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/**
+Remove the padding so developers are not caught out when they zero out 'fieldset' elements in all browsers.
+*/
+
+legend {
+  padding: 0;
+}
+
+/**
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/**
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to 'inherit' in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+Interactive
+===========
+*/
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*reset*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/*variables*/
+:root {
+  /* --- Brand & Theme Colors (OKLCH - Light Theme) --- */
+  --bg-primary: oklch(0.97 0.01 241); /* Clean, soft off-white background */
+  --bg-surface: oklch(1 0 0); /* Pure white for containers/cards */
+  --text-main: oklch(
+    0.2 0.03 241
+  ); /* Dark charcoal for high-contrast reading */
+  --text-muted: oklch(0.55 0.03 241); /* Balanced mid-grey for secondary text */
+
+  /* --- Game Elements (OKLCH) --- */
+  --tile-bg: oklch(0.93 0.02 241); /* Light grey for individual grid squares */
+  --tile-bg-hover: oklch(
+    0.88 0.03 241
+  ); /* Slightly darker grey for hover state */
+  --color-x: oklch(0.55 0.18 240); /* Professional sapphire blue for X */
+  --color-o: oklch(0.55 0.22 15); /* Deep vibrant crimson/rose for O */
+
+  /* --- UI Actions (OKLCH) --- */
+  --accent-color: oklch(
+    0.6 0.18 150
+  ); /* Accessible emerald green for buttons */
+  --accent-hover: oklch(
+    0.5 0.17 150
+  ); /* Deeper green for active button hover */
+
+  /* --- Typography --- */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Font Size Scale */
+  --font-size-xs: 0.75rem; /* 12px - For small labels / captions */
+  --font-size-sm: 0.875rem; /* 14px - For secondary text / stats */
+  --font-size-base: 1rem; /* 16px - Default body / button text */
+  --font-size-lg: 1.25rem; /* 20px - For player names / announcements */
+  --font-size-heading: 1.75rem; /* 28px - Main game title */
+  --tile-font-size: 2.5rem; /* 40px - Grid markers (X and O) */
+  --font-size-display: 3.5rem; /* 56px - Large win announcements / huge scores */
+
+  /* --- Spacing System (Fixed Multiples) --- */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2.5rem; /* 40px */
+
+  /* --- Layout Essentials --- */
+  --board-size: 320px;
+  --border-radius: 12px;
+  --transition-speed: 0.2s;
+
+  /* Softer shadow layout specialized for light backgrounds */
+  --shadow-main:
+    0 10px 25px -5px rgba(15, 23, 42, 0.08),
+    0 8px 16px -6px rgba(15, 23, 42, 0.04);
+  --card-border-color: oklch(0.88 0.02 241); /* Light crisp border lines */
+
+  /* --- Modal Component Variables --- */
+  --modal-max-width: 360px;
+  --modal-padding: var(--spacing-lg);
+  --modal-bg: var(--bg-surface);
+  --modal-overlay-bg: rgba(15, 23, 42, 0.4); /* Softer backdrop tint */
+  --modal-z-index: 999;
+  --modal-animation-speed: 0.3s;
+}
+
+/*globals*/
+html {
+  height: 100%;
+}
+
+body,
+main {
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+}
+
+h1 {
+  font-size: var(--font-size-display);
+}
+
+button {
+  padding: var(--spacing-sm) var(--spacing-xl);
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/*sections*/
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: var(--spacing-xs);
+
+  background-color: var(--text-main);
+  padding: var(--spacing-xs);
+  border-radius: 15px;
+}
+
+.game-container {
+  min-height: 100vh;
+}
+
+.tile {
+  background-color: var(--tile-bg);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 200ms all ease-in-out;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--tile-font-size);
+  font-weight: bolder;
+}
+
+.tile:hover {
+  background-color: var(--tile-bg-hover);
+}
+
+.tile.o-marker {
+  color: var(--color-o);
+}
+.tile.x-marker {
+  color: var(--color-x);
+}
