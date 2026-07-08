@@ -1,5 +1,11 @@
 const gameContainer = document.querySelector(".game-container");
 const setupModal = document.querySelector("#setupModal");
+const form = setupModal.querySelector("#setupForm");
+const btnClose = document.querySelector(".close-btn");
+const scoreGrid = document.querySelector(".score-grid");
+
+const resultPopup = document.querySelector(".result-popup");
+const result = resultPopup.querySelector(".result");
 
 const gameBoard = (() => {
   const board = Array(9).fill(null);
@@ -31,6 +37,10 @@ const gameController = (() => {
   let activePlayer = null;
   let isGameActive = false;
 
+  let playerOneScore = 0;
+  let playerTwoScore = 0;
+  let drawCount = 0;
+
   const winConditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -48,6 +58,27 @@ const gameController = (() => {
     gameContainer.innerHTML = ""; //reset the tile container
 
     if (isGameActive) {
+      const scoreGrid = document.createElement("div");
+      scoreGrid.classList.add("score-grid");
+      gameContainer.appendChild(scoreGrid);
+
+      const scores = [
+        { label: players[0].name, score: playerOneScore, type: "x" },
+        { label: "draw", score: drawCount, type: "draw" },
+        { label: players[1].name, score: playerTwoScore, type: "o" },
+      ];
+
+      scores.forEach(({ label, score, type }) => {
+        const scoreTile = document.createElement("div");
+        scoreTile.classList.add("score-tile", `score-tile--${type}`);
+
+        scoreTile.innerHTML = /*html*/ `
+          <h5 class="score-label">${label}</p>
+          <p class="score-value">${score}</p>
+          `;
+        scoreGrid.appendChild(scoreTile);
+      });
+
       const tileGrid = document.createElement("div");
       tileGrid.classList.add("tile-grid");
       gameContainer.appendChild(tileGrid);
@@ -63,7 +94,7 @@ const gameController = (() => {
         // Check if the board position is currently empty
         if (gameBoard.getBoard()[index] === null) {
           playerTurn(index); // Execute the turn logic
-          render();
+          render(p1, p2);
         }
       });
 
@@ -77,33 +108,67 @@ const gameController = (() => {
           tile.classList.add("o-marker");
         }
 
-        tile.textContent = tileValue || "";
         tile.dataset.index = index;
         tileGrid.appendChild(tile);
+      });
+
+      const actionContainer = document.createElement("div");
+      actionContainer.classList.add("action-container");
+      gameContainer.appendChild(actionContainer);
+
+      const resetBtn = document.createElement("button");
+      resetBtn.classList.add("reset-btn");
+      resetBtn.innerHTML = /*html*/ `
+        <img src="../assets/icons/reset.svg" height="30" width="30" alt="reset icon">
+        `;
+      actionContainer.appendChild(resetBtn);
+
+      resetBtn.addEventListener("click", () => {
+        playerOneScore = 0;
+        playerTwoScore = 0;
+        drawCount = 0;
+        gameBoard.resetBoard();
+        render();
       });
     } else {
       const startBtn = document.createElement("button");
       startBtn.textContent = "Start Game";
       startBtn.classList.add("start-btn");
       startBtn.addEventListener("click", () => {
-        startGame();
+        setupModal.showModal();
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+
+        const name1 = data.get("playerOne");
+        const name2 = data.get("playerTwo");
+
+        const playerOne = new createPlayer(name1, "X");
+        const playerTwo = new createPlayer(name2, "O");
+
+        if (!playerOne || !playerTwo) return;
+
+        startGame(playerOne, playerTwo);
+        setupModal.close();
+        form.reset();
+      });
+
+      btnClose.addEventListener("click", () => {
+        setupModal.close();
       });
 
       gameContainer.appendChild(startBtn);
     }
   };
 
-  const startGame = () => {
-    const name1 = prompt("Enter Player 1 Name (X):") || "Player 1";
-    const name2 = prompt("Enter Player 2 Name (O):") || "Player 2";
-
-    const player1 = createPlayer(name1, "X");
-    const player2 = createPlayer(name2, "O");
+  const startGame = (player1, player2) => {
     players = [player1, player2];
     activePlayer = players[0];
     isGameActive = true;
 
-    render();
+    render(players[0], players[1]);
   };
 
   // processes the choice and tracks the player turns
@@ -111,15 +176,29 @@ const gameController = (() => {
     gameBoard.makeMove(index, activePlayer.marker);
     render();
     if (checkWin()) {
-      alert(`🎉 Game Over! ${activePlayer.name} wins!`);
-      isGameActive = false;
+      resultPopup.style.bottom = "5%";
+      result.textContent = `Game Over! ${activePlayer.name} wins!`;
+      if (activePlayer.marker === players[0].marker) {
+        playerOneScore++;
+      } else if (activePlayer.marker === players[1].marker) {
+        playerTwoScore++;
+      }
       gameBoard.resetBoard();
+      render();
+      setTimeout(() => {
+        resultPopup.style.bottom = "-50%"; // hide again after N ms
+      }, 3000);
       return true; // Return true to signal that the game is over
     }
     if (checkTie()) {
-      alert("🤝 Game Over! It's a tie!");
-      isGameActive = false;
+      resultPopup.style.bottom = "5%";
+      result.textContent = "Game Over! It's a tie!";
+      drawCount++;
       gameBoard.resetBoard();
+      render();
+      setTimeout(() => {
+        resultPopup.style.bottom = "-50%"; // hide again after N ms
+      }, 3000);
       return true; // Return true to signal that the game is over
     }
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
