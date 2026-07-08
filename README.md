@@ -41,7 +41,7 @@
     <a href="https://github.com/ayemteezy/tic-tac-toe"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ayemteezy/tic-tac-toe">View Demo</a>
+    <a href="https://ayemteezy.github.io/tic-tac-toe/">View Demo</a>
     &middot;
     <a href="https://github.com/ayemteezy/tic-tac-toe/issues/new?labels=bug&template=bug-report.md">Report Bug</a>
     &middot;
@@ -79,7 +79,7 @@
 
 ## About The Project
 
-[![Tic Tac Toe Screen Shot][product-screenshot]](https://example.com)
+[![Tic Tac Toe Screen Shot][product-screenshot]](https://ayemteezy.github.io/tic-tac-toe/)
  
 This project is part of [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe)'s JavaScript course. The goal was to build a two-player Tic Tac Toe game while keeping as much logic as possible out of the global scope, using **factory functions** for players and the **module pattern** for the gameboard and game controller.
  
