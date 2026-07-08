@@ -119,7 +119,7 @@ const gameController = (() => {
       const resetBtn = document.createElement("button");
       resetBtn.classList.add("reset-btn");
       resetBtn.innerHTML = /*html*/ `
-        <img src="../assets/icons/reset.svg" height="30" width="30" alt="reset icon">
+        <img src="assets/icons/reset.svg" height="30" width="30" alt="reset icon">
         `;
       actionContainer.appendChild(resetBtn);
 
