@@ -144,6 +144,7 @@ button,
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
+  appearance: button;
 }
 
 /**
@@ -178,6 +179,7 @@ Correct the cursor style of increment and decrement buttons in Safari.
 
 [type="search"] {
   -webkit-appearance: textfield; /* 1 */
+  appearance: textfield;
   outline-offset: -2px; /* 2 */
 }
 
@@ -335,7 +337,7 @@ button:active {
 }
 
 /*components*/
-.start-btn {
+.start-btn,.com-btn {
   font-size: var(--font-size-heading);
 
   border: 2px solid var(--btn-accent);
@@ -376,7 +378,16 @@ button:active {
     1px 1px 0 var(--btn-danger);
 }
 
-.reset-btn {
+.action-container{
+  display: flex;
+  gap: var(--spacing-sm);
+
+  button{
+    width: 100%;
+  }
+}
+
+.reset-btn,.menu-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -527,7 +538,7 @@ button:active {
 
 .tile.o-marker::before {
   content: "";
-  width: 8%;
+  min-width: 8%;
   position: absolute;
   aspect-ratio: 1;
   border: 15px solid var(--color-o);
@@ -557,7 +568,7 @@ button:active {
   background-color: var(--tile-bg-hover);
 }
 
-#setupModal {
+#multiplayerModal,#singleplayerModal {
   position: absolute;
   top: 50%;
   left: 50%;

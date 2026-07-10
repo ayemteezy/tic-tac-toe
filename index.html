@@ -20,8 +20,8 @@
       </div>
     </main>
 
-    <dialog id="setupModal">
-      <form id="setupForm">
+    <dialog id="multiplayerModal">
+      <form id="multiplayerForm">
         <div class="field">
           <label for="playerOne">Player 1 (X)</label>
           <input
@@ -39,6 +39,25 @@
             name="playerTwo"
             id="playerTwo"
             placeholder="e.g UserTwo"
+            required
+          />
+        </div>
+        <div class="btn-container">
+          <button class="play-btn" type="submit">Play</button>
+          <button class="close-btn" type="button">Close</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="singleplayerModal">
+      <form id="singleplayerForm">
+        <div class="field">
+          <label for="playerOne">Player 1 (X)</label>
+          <input
+            type="text"
+            name="playerOne"
+            id="playerOne"
+            placeholder="e.g UserOne"
             required
           />
         </div>

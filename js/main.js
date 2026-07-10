@@ -1,7 +1,9 @@
 const gameContainer = document.querySelector(".game-container");
-const setupModal = document.querySelector("#setupModal");
-const form = setupModal.querySelector("#setupForm");
-const btnClose = document.querySelector(".close-btn");
+const multiplayerModal = document.querySelector("#multiplayerModal");
+const multiplayerForm = multiplayerModal.querySelector("#multiplayerForm");
+const singleplayerModal = document.querySelector("#singleplayerModal");
+const singleplayerForm = singleplayerModal.querySelector("#singleplayerForm");
+const btnClose = document.querySelectorAll(".close-btn");
 const scoreGrid = document.querySelector(".score-grid");
 
 const resultPopup = document.querySelector(".result-popup");
@@ -52,6 +54,25 @@ const gameController = (() => {
     [2, 4, 6],
   ];
 
+  const makeComputerMove = () => {
+    const currentBoard = gameBoard.getBoard();
+    const emptyIndexes = [];
+
+    currentBoard.forEach((tile, index) => {
+      if (tile === null) emptyIndexes.push(index);
+    });
+
+    if (emptyIndexes.length === 0) return;
+
+    // Pick a random available index
+    const randomIndex = emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)];
+
+    // 500ms delay simulates computer "thinking" before triggering its turn
+    setTimeout(() => {
+      playerTurn(randomIndex);
+    }, 500);
+  };
+
   const render = () => {
     const currentBoard = gameBoard.getBoard();
 
@@ -84,6 +105,8 @@ const gameController = (() => {
       gameContainer.appendChild(tileGrid);
 
       tileGrid.addEventListener("click", (e) => {
+         if (activePlayer && activePlayer.name === "Computer") return;
+
         // Target only elements with the "tile" class name
         const tile = e.target.closest(".tile");
         if (!tile) return;
@@ -116,50 +139,55 @@ const gameController = (() => {
       actionContainer.classList.add("action-container");
       gameContainer.appendChild(actionContainer);
 
+      const menuBtn = document.createElement('button')
       const resetBtn = document.createElement("button");
       resetBtn.classList.add("reset-btn");
+      menuBtn.classList.add('menu-btn');
       resetBtn.innerHTML = /*html*/ `
         <img src="assets/icons/reset.svg" height="30" width="30" alt="reset icon">
         `;
+      menuBtn.innerHTML = /*html*/ `
+        <img src="assets/icons/menu.svg" height="30" width="30" alt="menu icon">
+        `;
       actionContainer.appendChild(resetBtn);
+      actionContainer.appendChild(menuBtn);
+
+      menuBtn.addEventListener("click", () => {
+        playerOneScore = 0;
+        playerTwoScore = 0;
+        drawCount = 0;
+        gameBoard.resetBoard();
+        activePlayer = players[0];
+        isGameActive = false;
+        render();
+      });
 
       resetBtn.addEventListener("click", () => {
         playerOneScore = 0;
         playerTwoScore = 0;
         drawCount = 0;
         gameBoard.resetBoard();
+        activePlayer = players[0];
         render();
       });
     } else {
       const startBtn = document.createElement("button");
+      const computerBtn = document.createElement("button");
       startBtn.textContent = "Start Game";
+      computerBtn.textContent= "Singleplayer"
       startBtn.classList.add("start-btn");
+      computerBtn.classList.add("com-btn");
       startBtn.addEventListener("click", () => {
-        setupModal.showModal();
+        multiplayerModal.showModal();
+      });
+      computerBtn.addEventListener("click", () => {
+        singleplayerModal.showModal();
       });
 
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const data = new FormData(form);
 
-        const name1 = data.get("playerOne");
-        const name2 = data.get("playerTwo");
-
-        const playerOne = new createPlayer(name1, "X");
-        const playerTwo = new createPlayer(name2, "O");
-
-        if (!playerOne || !playerTwo) return;
-
-        startGame(playerOne, playerTwo);
-        setupModal.close();
-        form.reset();
-      });
-
-      btnClose.addEventListener("click", () => {
-        setupModal.close();
-      });
 
       gameContainer.appendChild(startBtn);
+      gameContainer.appendChild(computerBtn);
     }
   };
 
@@ -202,6 +230,12 @@ const gameController = (() => {
       return true; // Return true to signal that the game is over
     }
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    // Check if the newly updated active player is the computer, and run its engine
+      if (isGameActive && activePlayer.name === "Computer") {
+        makeComputerMove();
+      }
+      return false;
+
     return false;
   };
 
@@ -223,4 +257,42 @@ const gameController = (() => {
   return { startGame, render };
 })();
 
+
+multiplayerForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const data = new FormData(multiplayerForm);
+
+  const name1 = data.get("playerOne");
+  const name2 = data.get("playerTwo");
+
+  const playerOne = new createPlayer(name1, "X");
+  const playerTwo = new createPlayer(name2, "O");
+
+  if (!playerOne || !playerTwo) return;
+
+  gameController.startGame(playerOne, playerTwo);
+  multiplayerModal.close();
+  multiplayerForm.reset();
+});
+
+singleplayerForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const data = new FormData(singleplayerForm);
+
+  const name1 = data.get('playerOne');
+
+  const playerOne = new createPlayer(name1, "X");
+  const playerTwo = new createPlayer("Computer", "O");
+
+  gameController.startGame(playerOne, playerTwo);
+  singleplayerModal.close();
+   singleplayerForm.reset();
+})
+
+btnClose.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    singleplayerModal.close();
+    multiplayerModal.close();
+  });
+});
 gameController.render();
