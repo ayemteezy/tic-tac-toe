@@ -149,7 +149,8 @@ Or simply drag and drop the file into your browser window.
 - [x] Scoreboard tracking wins and draws
 - [x] Custom result banner with ribbon styling
 - [x] Reset scoreboard button
-- [ ] Single-player mode vs. computer (minimax AI)
+- [x] Single-player mode vs. computer (minimax AI)
+- [ ] Mobile Responsiveness
 
 See the [open issues](https://github.com/ayemteezy/tic-tac-toe/issues) for a full list of proposed features (and known issues).
 
